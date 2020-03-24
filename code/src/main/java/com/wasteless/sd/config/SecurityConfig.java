@@ -29,7 +29,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable().authorizeRequests()
                 .anyRequest().authenticated()
                 .and().httpBasic()
-                .and().formLogin().loginPage("/auth/login").permitAll()
+                .and().formLogin().defaultSuccessUrl("/grocery-lists", true)
+                .loginPage("/auth/login").permitAll()
                 .and().logout().permitAll();
     }
 }

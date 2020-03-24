@@ -1,6 +1,7 @@
 package com.wasteless.sd.Service;
 
 import com.wasteless.sd.Model.GroceryList;
+import com.wasteless.sd.Model.GroceryListItem;
 import com.wasteless.sd.Repository.GroceryListRepository;
 import org.springframework.stereotype.Service;
 
@@ -25,5 +26,9 @@ public class GroceryListService {
 
     public Optional<GroceryList> findById(Integer listId) {
         return groceryListRepository.findById(listId);
+    }
+
+    public void deleteGroceryList(Integer id) {
+        groceryListRepository.deleteById(id);
     }
 }

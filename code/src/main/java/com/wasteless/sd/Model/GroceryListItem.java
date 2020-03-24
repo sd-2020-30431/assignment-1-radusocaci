@@ -3,7 +3,7 @@ package com.wasteless.sd.Model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.springframework.data.annotation.CreatedDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -31,11 +31,13 @@ public class GroceryListItem {
     @NotNull
     private int calorieValue;
 
-    @CreatedDate
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
     private Date purchaseDate;
 
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
     private Date consumptionDate;
 
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
     private Date expirationDate;
 
     public Integer getId() {

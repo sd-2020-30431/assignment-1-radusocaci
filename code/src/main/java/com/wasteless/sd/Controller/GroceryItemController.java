@@ -3,13 +3,12 @@ package com.wasteless.sd.Controller;
 import com.wasteless.sd.Model.GroceryListItem;
 import com.wasteless.sd.Service.GroceryItemService;
 import com.wasteless.sd.Service.GroceryListService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-import java.util.List;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class GroceryItemController {
@@ -21,20 +20,28 @@ public class GroceryItemController {
         this.groceryListService = groceryListService;
     }
 
-    @GetMapping("/grocery-lists/{listId}/items")
-    @ResponseBody
-    public List<GroceryListItem> getAllItemsByListId(@PathVariable(value = "listId") Integer listId) {
-        return groceryItemService.findByListId(listId);
+    @GetMapping("/grocery-lists/{listId}")
+    public String getAllItemsByListId(@PathVariable Integer listId, Model model) {
+        model.addAttribute("items", groceryItemService.findByListId(listId));
+        model.addAttribute("listId", listId);
+        model.addAttribute("addItem", new GroceryListItem());
+        return "groc-list-items";
     }
 
-    @PostMapping("/grocery-lists/{listId}/items")
-    public ResponseEntity<HttpStatus> createGroceryItem(@PathVariable(value = "listId") Integer listId,
-                                                        @Valid @RequestBody GroceryListItem groceryListItem) {
+    @PostMapping(path = "/create-item/{listId}")
+    public String createGroceryList(GroceryListItem groceryItem, @PathVariable(value = "listId") Integer listId) {
         groceryListService.findById(listId).map(list -> {
-            groceryListItem.setGroceryList(list);
-            return groceryItemService.save(groceryListItem);
+            groceryItem.setGroceryList(list);
+            return groceryItemService.save(groceryItem);
         });
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return "redirect:/grocery-lists/" + listId;
+    }
+
+    @RequestMapping("/grocery-item/delete/{id}")
+    public String deleteGroceryList(@PathVariable("id") Integer id) {
+        Integer listId = groceryItemService.findById(id).getGroceryList().getId();
+        groceryItemService.deleteGroceryItem(id);
+        return "redirect:/grocery-lists/" + listId;
     }
 }
