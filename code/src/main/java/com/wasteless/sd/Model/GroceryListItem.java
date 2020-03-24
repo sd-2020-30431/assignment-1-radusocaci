@@ -1,23 +1,37 @@
 package com.wasteless.sd.Model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.data.annotation.CreatedDate;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
+@Table(name = "groceryitem")
 public class GroceryListItem {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "grocerylist_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+    private GroceryList groceryList;
+
+    @NotNull
     private String name;
 
+    @NotNull
     private int quantity;
 
+    @NotNull
     private int calorieValue;
 
+    @CreatedDate
     private Date purchaseDate;
 
     private Date consumptionDate;
@@ -30,6 +44,14 @@ public class GroceryListItem {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public GroceryList getGroceryList() {
+        return groceryList;
+    }
+
+    public void setGroceryList(GroceryList groceryList) {
+        this.groceryList = groceryList;
     }
 
     public String getName() {
@@ -84,6 +106,7 @@ public class GroceryListItem {
     public String toString() {
         return "GroceryListItem{" +
                 "id=" + id +
+                ", groceryList=" + groceryList +
                 ", name='" + name + '\'' +
                 ", quantity=" + quantity +
                 ", calorieValue=" + calorieValue +
