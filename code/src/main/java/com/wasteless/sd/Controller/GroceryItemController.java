@@ -2,7 +2,6 @@ package com.wasteless.sd.Controller;
 
 import com.wasteless.sd.Model.GroceryListItem;
 import com.wasteless.sd.Service.GroceryItemService;
-import com.wasteless.sd.Service.GroceryListService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,11 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class GroceryItemController {
     private GroceryItemService groceryItemService;
-    private GroceryListService groceryListService;
 
-    public GroceryItemController(GroceryItemService groceryItemService, GroceryListService groceryListService) {
+    public GroceryItemController(GroceryItemService groceryItemService) {
         this.groceryItemService = groceryItemService;
-        this.groceryListService = groceryListService;
     }
 
     @GetMapping("/grocery-lists/{listId}")
@@ -30,11 +27,7 @@ public class GroceryItemController {
 
     @PostMapping(path = "/create-item/{listId}")
     public String createGroceryList(GroceryListItem groceryItem, @PathVariable(value = "listId") Integer listId) {
-        groceryListService.findById(listId).map(list -> {
-            groceryItem.setGroceryList(list);
-            return groceryItemService.save(groceryItem);
-        });
-
+        groceryItemService.save(groceryItem, listId);
         return "redirect:/grocery-lists/" + listId;
     }
 

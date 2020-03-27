@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.validation.Valid;
 import java.security.Principal;
 
 @Controller
@@ -35,7 +36,7 @@ public class GroceryListController {
     }
 
     @PostMapping(path = "/create-list")
-    public String createGroceryList(GroceryList groceryList, Principal principal) {
+    public String createGroceryList(@Valid GroceryList groceryList, Principal principal) {
         groceryListService.save(groceryList);
         return "redirect:/grocery-lists";
     }

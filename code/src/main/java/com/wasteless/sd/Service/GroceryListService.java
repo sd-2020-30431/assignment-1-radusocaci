@@ -1,7 +1,6 @@
 package com.wasteless.sd.Service;
 
 import com.wasteless.sd.Model.GroceryList;
-import com.wasteless.sd.Model.GroceryListItem;
 import com.wasteless.sd.Repository.GroceryListRepository;
 import org.springframework.stereotype.Service;
 

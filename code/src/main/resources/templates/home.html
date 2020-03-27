@@ -17,7 +17,8 @@
     <div class="card">
         <div class="card-body">
             <div th:switch="${groceryLists}" class="container my-5">
-                <form class="form-inline mb-4" action="#" th:action="@{/create-list}" th:object="${addList}" method="post">
+                <form class="form-inline mb-4" action="#" th:action="@{/create-list}" th:object="${addList}"
+                      method="post">
                     <div class="row">
                         <div class="form-group mb-2">
                             <label for="name" class="col-form-label mr-3 ml-5">List Name</label>
@@ -66,6 +67,10 @@
                             </tbody>
                         </table>
                     </div>
+                </div>
+                <div class="row">
+                    <a href="/report?type=weekly" class="btn btn-primary mb-5">Weekly Report</a>
+                    <a href="/report?type=monthly" class="btn btn-primary mb-5">Monthly Report</a>
                 </div>
             </div>
         </div>
