@@ -21,7 +21,8 @@ public abstract class Report {
         for (GroceryListItem groceryListItem : groceryItems) {
             totalCalories += groceryListItem.getCalorieValue() * groceryListItem.getQuantity();
 
-            if (groceryListItem.getConsumptionDate().after(Date.from(ZonedDateTime.now().toInstant()))) {
+            if (groceryListItem.getConsumptionDate() != null
+                    && groceryListItem.getConsumptionDate().before(Date.from(ZonedDateTime.now().toInstant()))) {
                 consumedCalories += groceryListItem.getCalorieValue() * groceryListItem.getQuantity();
                 consumedItems.add(groceryListItem.getName());
             }

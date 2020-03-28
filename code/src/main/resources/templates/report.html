@@ -10,9 +10,12 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 </head>
 <body>
-<a style="color: blue" th:href="@{/grocery-lists}">Home</a>
-
+<h1 style="text-align: center; margin-bottom: 30px">WasteLess</h1>
 <div class="container my-2">
+    <a style="color: blue" th:href="@{/grocery-lists}">Home</a>
+    <form th:action="@{/logout}" style="text-align: right" method="post">
+        <input class="btn btn-primary mb-5" type="submit" value="Sign Out"/>
+    </form>
     <div class="card">
         <div class="card-body">
             <div th:switch="${items}" class="container my-5">
@@ -46,9 +49,5 @@
         </div>
     </div>
 </div>
-
-<form th:action="@{/logout}" method="post">
-    <input type="submit" value="Sign Out"/>
-</form>
 </body>
 </html>

@@ -10,14 +10,17 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 </head>
 <body>
-<h1>Grocery Lists</h1>
-<a style="color: blue" th:href="@{/grocery-lists}">Home</a>
-
+<h1 style="text-align: center; margin-bottom: 30px">WasteLess</h1>
 <div class="container my-2">
+    <a style="color: blue" th:href="@{/grocery-lists}">Home</a>
+    <form th:action="@{/logout}" style="text-align: right" method="post">
+        <input class="btn btn-primary mb-5" type="submit" value="Sign Out"/>
+    </form>
     <div class="card">
         <div class="card-body">
             <div th:switch="${items}" class="container my-5">
-                <form class="mb-4" action="#" th:action="@{/create-item/{id}(id=${listId})}" th:object="${addItem}" method="post">
+                <form class="mb-4" action="#" th:action="@{/create-item/{id}(id=${listId})}" th:object="${addItem}"
+                      method="post">
                     <div class="row">
                         <div class="form-group col-md-3 mx-sm-3 mb-2">
                             <label for="name" class="col-form-label">Item Name</label>
@@ -67,9 +70,9 @@
                                 <th>Quantity</th>
                                 <th>Calorie Value</th>
                                 <th>Purchase Date</th>
-                                <th>Consumption Date</th>
                                 <th>Expiration Date</th>
-                                <th>Delete</th>
+                                <th>Consumption Date</th>
+                                <th>Donate</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -78,12 +81,12 @@
                                 <td th:text="${item.quantity}"></td>
                                 <td th:text="${item.calorieValue}"></td>
                                 <td th:text="${item.purchaseDate}"></td>
-                                <td th:text="${item.consumptionDate}"></td>
                                 <td th:text="${item.expirationDate}"></td>
+                                <td th:text="${item.consumptionDate}"></td>
                                 <td>
                                     <a th:href="@{/grocery-item/delete/{id}(id=${item.id})}"
                                        class="btn btn-primary">
-                                        <i class="fas fa-user-times ml-2"></i>
+                                        <i class="fas fa-donate ml-2"></i>
                                     </a>
                                 </td>
                             </tr>
@@ -95,9 +98,5 @@
         </div>
     </div>
 </div>
-
-<form th:action="@{/logout}" method="post">
-    <input type="submit" value="Sign Out"/>
-</form>
 </body>
 </html>

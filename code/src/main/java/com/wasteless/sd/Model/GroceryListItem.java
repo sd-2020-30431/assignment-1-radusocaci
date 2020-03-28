@@ -31,12 +31,14 @@ public class GroceryListItem {
     @NotNull
     private int calorieValue;
 
+    @NotNull
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private Date purchaseDate;
 
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private Date consumptionDate;
 
+    @NotNull
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private Date expirationDate;
 

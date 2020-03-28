@@ -10,22 +10,24 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 </head>
 <body>
-<h1>Grocery Lists</h1>
-<a style="color: blue" th:href="@{/grocery-lists}">Home</a>
-
+<h1 style="text-align: center; margin-bottom: 30px">WasteLess</h1>
 <div class="container my-2">
+    <div th:if="${message}" th:text="${message}" style="text-align: center" class="alert alert-danger"></div>
+    <form th:action="@{/logout}" style="text-align: right" method="post">
+        <input class="btn btn-primary mb-5" type="submit" value="Sign Out"/>
+    </form>
     <div class="card">
         <div class="card-body">
             <div th:switch="${groceryLists}" class="container my-5">
                 <form class="form-inline mb-4" action="#" th:action="@{/create-list}" th:object="${addList}"
                       method="post">
                     <div class="row">
-                        <div class="form-group mb-2">
+                        <div class="form-group">
                             <label for="name" class="col-form-label mr-3 ml-5">List Name</label>
                             <input type="text" th:field="*{name}" class="form-control"
                                    id="name" placeholder="List Name"/>
                         </div>
-                        <div class="form-group mx-sm-3 mb-2">
+                        <div class="form-group mx-sm-3">
                             <label for="username" class="col-form-label mr-3">User Name</label>
                             <input type="text" th:field="*{username}" class="form-control mr-3"
                                    id="username" placeholder="User Name" readonly/>
@@ -44,7 +46,7 @@
                                 <th>List Name</th>
                                 <th>User Name</th>
                                 <th>Edit</th>
-                                <th>Delete</th>
+                                <th>Donate</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -60,7 +62,7 @@
                                 <td>
                                     <a th:href="@{/grocery-lists/delete/{id}(id=${groceryList.id})}"
                                        class="btn btn-primary">
-                                        <i class="fas fa-user-times ml-2"></i>
+                                        <i class="fas fa-donate ml-2"></i>
                                     </a>
                                 </td>
                             </tr>
@@ -68,17 +70,27 @@
                         </table>
                     </div>
                 </div>
-                <div class="row">
-                    <a href="/report?type=weekly" class="btn btn-primary mb-5">Weekly Report</a>
-                    <a href="/report?type=monthly" class="btn btn-primary mb-5">Monthly Report</a>
+                <div class="row mt-5 ml-3">
+                    <a href="/report?type=weekly" class="btn btn-primary mr-3">Weekly Report</a>
+                    <a href="/report?type=monthly" class="btn btn-primary ml-3">Monthly Report</a>
                 </div>
+                <form class="form-inline mb-4" style="float: right" action="#" th:action="@{/goal}"
+                      th:object="${goal}"
+                      method="post">
+                    <div class="row">
+                        <div class="form-group">
+                            <label for="caloriesPerDay" class="col-form-label mr-3 ml-5">Goal</label>
+                            <input type="text" size="2" th:field="*{caloriesPerDay}" class="form-control"
+                                   id="caloriesPerDay" placeholder="Goal"/>
+                        </div>
+                        <input type="submit" class="btn btn-primary ml-3" value="Set Goal">
+
+                        <input type="hidden" id="id" th:field="*{id}">
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
-
-<form th:action="@{/logout}" method="post">
-    <input type="submit" value="Sign Out"/>
-</form>
 </body>
 </html>

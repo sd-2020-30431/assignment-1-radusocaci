@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.validation.Valid;
+import java.security.Principal;
+
 @Controller
 public class GroceryItemController {
     private GroceryItemService groceryItemService;
@@ -26,15 +29,17 @@ public class GroceryItemController {
     }
 
     @PostMapping(path = "/create-item/{listId}")
-    public String createGroceryList(GroceryListItem groceryItem, @PathVariable(value = "listId") Integer listId) {
-        groceryItemService.save(groceryItem, listId);
+    public String createGroceryList(@Valid GroceryListItem groceryItem,
+                                    @PathVariable(value = "listId") Integer listId,
+                                    Principal principal) {
+        groceryItemService.save(groceryItem, listId, principal.getName());
         return "redirect:/grocery-lists/" + listId;
     }
 
     @RequestMapping("/grocery-item/delete/{id}")
-    public String deleteGroceryList(@PathVariable("id") Integer id) {
+    public String deleteGroceryList(@PathVariable("id") Integer id, Principal principal) {
         Integer listId = groceryItemService.findById(id).getGroceryList().getId();
-        groceryItemService.deleteGroceryItem(id);
+        groceryItemService.deleteGroceryItem(id, principal.getName());
         return "redirect:/grocery-lists/" + listId;
     }
 }
